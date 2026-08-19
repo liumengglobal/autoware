@@ -13,11 +13,12 @@ for arg in "$@"; do
 done
 
 WORK="$(cd "$(dirname "$0")" && pwd)"
+ROOT="$(cd "$WORK/.." && pwd)"
 
 source /opt/ros/jazzy/setup.bash
-source "$WORK/install/setup.bash"
+source "$ROOT/install/setup.bash"
 
-DATA_PATH="${WORK}/../autoware_data/ml_models"
+DATA_PATH="/home/aw/data"
 MODEL_NAME=centerpoint_tiny
 CONTAINER=pointcloud_container
 LOG=/tmp/centerpoint_sim
@@ -53,7 +54,7 @@ ros2 component load "/$CONTAINER" synthetic_cuda_pointcloud_publisher \
   "synthetic_cuda_pointcloud_publisher::SyntheticCudaPointCloudPublisher" > "$LOG/load_pub.log" 2>&1
 
 echo "[4/5] launch lidar_centerpoint (composable in container)"
-cd "$WORK"
+cd "$ROOT"
 ros2 launch autoware_lidar_centerpoint lidar_centerpoint.launch.xml \
   data_path:="$DATA_PATH" model_name:="$MODEL_NAME" \
   use_pointcloud_container:=true pointcloud_container_name:="$CONTAINER" > "$LOG/centerpoint.log" 2>&1 &
