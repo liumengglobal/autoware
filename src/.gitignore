@@ -4,3 +4,7 @@
 # EXCEPT: Re-include the necessary files.
 !README.md
 !.gitignore
+
+# EXCEPT: Local simulation test packages.
+!centerpoint_sim_test/
+!centerpoint_sim_test/**
